@@ -1,0 +1,97 @@
+{% extends "partials/base.html" %}
+{% load static %}
+
+{% block content %}
+
+<section class="flat-breadcrumb">
+    <div class="container">
+        
+        <div class="row">
+            <div class="col-md-12">
+                {% if query %}
+                <ul class="breadcrumbs">
+                    <li class="trail-item">
+                        <a href="#" title="">Home</a>
+                        <span><img src="{% static 'images/icons/arrow-right.png' %}"></span>
+                    </li>
+                    <li class="trail-end">
+                        <a href="#" title="">{{query}}</a>
+                    </li>
+
+                </ul><!-- /.breacrumbs -->
+                {% else %}
+                <h3>No Searched Item</h3>
+                {% endif %}
+            </div><!-- /.col-md-12 -->
+        </div><!-- /.row -->
+    </div><!-- /.container -->
+</section><!-- /.flat-breadcrumb -->
+
+
+
+<section class="flat-row flat-highlights style1">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="flat-row-title">
+                    <h3>We found <strong>{{products.count}}</strong> item{{products.count|pluralize}} for you!</h3>
+                </div>
+            </div><!-- /.cl-md-12 -->
+        </div><!-- /.row -->
+        <div class="row">
+            {% for p in products %}
+            <div class="col-lg-4 col-sm-6">
+                <div class="product-box">
+                    <div class="imagebox">
+                        
+                        <ul class="box-image owl-carousel-1">
+                            <li>
+                                <a href="{% url 'core:product-detail' p.pid %}" title="">
+                                    <img src="{{p.image.url}}" alt="" height="200px" width="150px">
+                                </a>
+                            </li>
+                           
+                        </ul><!-- /.box-image -->
+                        <div class="box-content">
+                            <div class="cat-name">
+                                <a href="{% url 'core:product-detail' p.pid %}" title="">{{p.category.title}}</a>
+                            </div>
+                            <div class="product-name">
+                                <a href="{% url 'core:product-detail' p.pid %}" title="">{{p.title}}<br /></a>
+                            </div>
+                            <div class="price">
+                                <span class="sale">₹ {{p.price}}</span>
+                                <span class="old-price">₹{{ p.old_price }}</span>
+                            </div>
+                        </div><!-- /.box-content -->
+                        <div class="box-bottom">
+                            <div class="btn-add-cart">
+                                <input type="hidden" value="1" id="product-quantity" class="product-quantity-{{ p.id }}">
+												<input type="hidden" value="{{p.pid}}" class="product-pid-{{ p.id }}">
+												<input type="hidden" value="{{p.image.url}}" class="product-image-{{ p.id }}">
+												<input type="hidden" value="{{p.id}}" class="product-id-{{ p.id }}">
+												<input type="hidden" value="{{p.title}}" class="product-title-{{ p.id }}">
+												<button style="background-color: rgb(225, 80, 32);" 
+class="add-to-cart-btn" 
+data-product-id="{{ p.id }}">
+<img src="{% static 'images/icons/add-cart.png' %}"> Add to Cart
+</button>
+                                
+
+<button class="add-to-wishlist-btn" data-product-id="{{p.id}}">
+Wishlist
+</button>
+                            </div>
+                        </div><!-- /.box-bottom -->
+                    </div><!-- /.imagebox -->
+                </div>
+
+            </div><!-- /.col-lg-3 col-sm-6 -->
+            {% endfor %}
+        </div><!-- /.row -->
+    </div><!-- /.container -->
+</section><!-- /.flat-highlights --><br>
+<br>
+<br>
+
+{% endblock content %}

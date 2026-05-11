@@ -1,0 +1,79 @@
+{% extends "partials/base.html" %}
+{% load static %}
+
+{% block content %}
+
+<section class="container mt-5 mb-5">
+    <h2 class="mb-4"><strong>My Wishlist</strong></h2>
+
+    {% if wishlist %}
+    <div class="table-responsive">
+        <table class="table align-middle">
+
+            <thead class="border-bottom">
+                <tr>
+                    <th>Product</th>
+                    <th>Stock</th>
+                    <th>Action</th>
+                    <th>Remove</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for item in wishlist %}
+                <tr class="border-bottom">
+
+                    <!-- Product Info -->
+                    <td>
+                        <div class="d-flex align-items-center">
+
+                            <img src="{{ item.product.image.url }}"
+                                 style="width:100px; height:100px; object-fit:contain; margin-right:15px;">
+
+                            <div>
+                                <h6 class="mb-1">{{ item.product.title }}</h6>
+                                <strong>₹ {{ item.product.price }}</strong>
+                            </div>
+
+                        </div>
+                    </td>
+
+                    <!-- Stock -->
+                    <td>
+                        <span style="color:green; font-weight:600;">
+                            In Stock
+                        </span>
+                    </td>
+
+                    <!-- Add to Cart -->
+                    <td>
+                       
+                       <button class="add-to-cart-btn"
+        data-product-id="{{ item.product.id }}">
+    Add To Cart
+</button>
+                    </td>
+
+                    <!-- Remove -->
+                    <td>
+                        <a href="{% url 'core:remove-from-wishlist' item.id %}">
+                            🗑
+                        </a>
+                    </td>
+
+                </tr>
+                {% endfor %}
+            </tbody>
+
+        </table>
+    </div>
+
+    {% else %}
+        <div class="text-center mt-5">
+            <h5>Your Wishlist is Empty 💔</h5>
+        </div>
+    {% endif %}
+
+</section>
+
+{% endblock %}

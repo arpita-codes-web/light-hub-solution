@@ -1,0 +1,197 @@
+{% extends "partials/base.html" %}
+{% load static %}
+
+{% block content %}
+
+<head>
+	<style>
+		input[type="range"] {
+			-webkit-appearance: none;
+			/* Remove default styles */
+			appearance: none;
+			width: 100%;
+			height: 8px;
+			background: #ddd;
+			/* Track background */
+			border-radius: 5px;
+			outline: none;
+			opacity: 0.9;
+			transition: 0.3s;
+		}
+
+		input[type="range"]::-webkit-slider-runnable-track {
+			background: #ff5722;
+			/* Track color */
+			height: 8px;
+			border-radius: 5px;
+		}
+
+		input[type="range"]::-moz-range-track {
+			background: #ff5722;
+			height: 8px;
+			border-radius: 5px;
+		}
+
+		input[type="range"]::-webkit-slider-thumb {
+			-webkit-appearance: none;
+			appearance: none;
+			width: 20px;
+			height: 20px;
+			background: #ff5722;
+			/* Thumb color */
+			border-radius: 50%;
+			cursor: pointer;
+			margin-top: -6px;
+		}
+
+		input[type="range"]::-moz-range-thumb {
+			width: 20px;
+			height: 20px;
+			background: #ff5722;
+			border-radius: 50%;
+			cursor: pointer;
+		}
+	</style>
+</head>
+<section class="flat-breadcrumb">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<ul class="breadcrumbs">
+					<li class="trail-item">
+						<a href="#" title="">Home</a>
+						<span><img src="{%static 'images/icons/arrow-right.png' %}" alt=""></span>
+					</li>
+					<li class="trail-end">
+						<a href="#" title="">Products</a>
+					</li>
+					
+				</ul><!-- /.breacrumbs -->
+			</div><!-- /.col-md-12 -->
+		</div><!-- /.row -->
+	</div><!-- /.container -->
+</section><!-- /.flat-breadcrumb -->
+
+<main id="shop" class="style1">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-8 col-lg-9">
+				<div class="main-shop">
+					<div class="wrap-imagebox style1 v1">
+						<div class="">
+							<h3>We found <strong>{{products.count}}</strong> item{{products.count|pluralize}} for you!
+							</h3>
+							<div class="clearfix"></div>
+						</div>
+						<div class="row">
+							{% for p in products %}
+							<div class="col-lg-4 col-sm-6">
+								<div class="product-box">
+									<div class="imagebox">
+										
+									
+										<ul class="box-image owl-carousel-1">
+											<li>
+												<a href="{% url 'core:product-detail' p.pid %}" title="">
+													<img src="{{p.image.url}}" alt="" height="250px" width="250px">
+												</a>
+											</li>
+											
+										</ul><!-- /.box-image -->
+										<div class="box-content">
+											<div class="cat-name">
+												<a href="{% url 'core:product-detail' p.pid %}"
+													title="">{{p.category.title}}</a>
+											</div>
+											<div class="product-name">
+												<a href="{% url 'core:product-detail' p.pid %}"
+													title="">{{p.title}}<br /></a>
+											</div>
+											<div class="price">
+												<div class="sale">
+													<span>₹</span><span class="current-product-price-{{ p.id }}">{{p.price}}</span>
+													<span class="old-price">₹{{ p.old_price }}</span>
+												</div>
+												
+											</div>
+										</div><!-- /.box-content -->
+									
+										<div class="box-bottom">
+											
+											<div class="btn-add-cart">
+												
+												<input type="hidden" value="1" id="product-quantity" class="product-quantity-{{ p.id }}">
+												<input type="hidden" value="{{p.pid}}" class="product-pid-{{ p.id }}">
+												<input type="hidden" value="{{p.image.url}}" class="product-image-{{ p.id }}">
+												<input type="hidden" value="{{p.id}}" class="product-id-{{ p.id }}">
+												<input type="hidden" value="{{p.title}}" class="product-title-{{ p.id }}">
+												<button style="background-color: rgb(225, 80, 32);" 
+class="add-to-cart-btn" 
+data-product-id="{{ p.id }}">
+<img src="{% static 'images/icons/add-cart.png' %}"> Add to Cart
+</button>
+												
+											</div>
+											<button class="add-to-wishlist-btn" data-product-id="{{p.id}}">
+Wishlist
+</button>
+										
+
+
+											
+										</div><!-- /.box-bottom -->
+									</div><!-- /.imagebox -->
+								</div>
+
+							</div><!-- /.col-lg-3 col-sm-6 -->
+							{% endfor %}
+						</div><!-- /.row -->
+					</div><!-- /.wrap-imagebox style1 -->
+
+					
+				</div>
+			</div><!-- /.col-md-8 col-lg-9 -->
+			<div class="col-md-4 col-lg-3">
+				<div class="sidebar ">
+					<div class="widget widget-categories">
+						<div class="widget-title">
+							<h3>Categories<span></span></h3>
+						</div>
+						<ul class="cat-list style1 widget-content">
+{% for c in categories %}
+
+<li>
+
+<span data-bs-toggle="collapse" href="#cat{{c.id}}" style="cursor:pointer;">
+{{c.title}} <i>({{ c.products.count }})</i>
+</span>
+
+<ul class="cat-child collapse" id="cat{{c.id}}">
+
+{% for p in c.products.all %}
+<li>
+<a href="{% url 'core:product-detail' p.pid %}">{{ p.title }}</a>
+</li>
+{% endfor %}
+
+</ul>
+
+</li>
+
+{% endfor %}
+</ul>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+						
+					</div><!-- /.widget-categories -->
+
+					 
+				</div><!-- /.sidebar -->
+			</div><!-- /.col-md-4 col-lg-3 -->
+		</div><!-- /.row -->
+	</div><!-- /.container -->
+</main><!-- /#shop -->
+
+{% endblock content %}

@@ -1,0 +1,238 @@
+{% load static %} 
+
+<section class="flat-breadcrumb">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="breadcrumbs">
+                    <li class="trail-item">
+                        <a href="#" title="">Home</a>
+                        <span><img src="{% static 'images/icons/arrow-right.png' %}" alt=""></span>
+                    </li>
+                    <li class="trail-item">
+                        <a href="#" title="">Shop</a>
+                        <span><img src="{% static 'images/icons/arrow-right.png' %}" alt=""></span>
+                    </li>
+                    <li class="trail-end">
+                        <a href="#" title="">cart</a>
+                    </li>
+                </ul><!-- /.breacrumbs -->
+            </div><!-- /.col-md-12 -->
+        </div><!-- /.row -->
+    </div><!-- /.container -->
+</section><!-- /.flat-breadcrumb -->
+
+<section class="flat-shop-cart" id="cart-list">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="flat-row-title style1">
+                    <h3>Shopping Cart</h3>
+                </div>
+                <div class="table-cart">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>Title</th>
+                                <th>Price</th>
+                                <th class="text-center">Quantity</th>
+                                <th>Total</th>
+                                <th>Update</th>
+                                <th>Remove</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for product_id, item in cart_data.items %}
+                            <tr>
+                                <td class="img-product">
+                                    <div class="img-product"><img src="{{ item.image }}" alt=""></div>
+                                </td>
+                                <td class="product-name">
+                                    {% if item.pid %}
+<a href="{% url 'core:product-detail' item.pid %}">{{ item.title }}</a>
+{% else %}
+{{ item.title }}
+{% endif %}
+            
+                                </td>
+                                <td class="price" data-title="Price">
+                                    ₹ {{item.price|floatformat:2}}
+                                </td>
+
+                                <td>
+                                    <div class="quanlity" data-title="Stock">
+                                    
+       <input type="number"
+       class="product-qty"
+       data-product="{{product_id}}"
+       value="{{item.qty}}"
+       min="1">
+        
+                                    </div>
+                                </td>
+
+                                <td class="pr-3" style="color: darkorange;">
+                                    
+                                
+                                         <h4>₹ {{ item.subtotal|floatformat:2 }}</h4>
+                                
+                                </td>
+                            
+
+<td data-title="update">
+<button class="update-cart" data-product="{{product_id}}">
+Update
+</button>
+</td>
+
+                                <td class="action text-center pr-3 pl-3" data-title="Remove">
+                                    <button style="background-color:darkorange;" class="text-body delete-product" data-product="{{product_id}}">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    <div class="form-coupon">
+                        <form action="#" method="get" accept-charset="utf-8">
+                            <div class="coupon-input">
+                                <input type="text" name="coupon code" placeholder="Coupon Code">
+                                <button type="submit">Apply Coupon</button>
+                            </div>
+                        </form>
+                    </div><!-- /.form-coupon -->
+                </div><br><!-- /.table-cart -->
+            </div><!-- /.col-lg-8 -->
+
+            <div class="col-lg-4">
+                <div class="cart-totals">
+                    <h3>Cart Totals</h3>
+                    <form action="#" method="get" accept-charset="utf-8">
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <td>Subtotal</td>
+                                    <td class="subtotal">₹ <span id="subtotal">{{ cart_total_amount }}</span></td>
+                        
+                                </tr>
+                                <tr>
+                                    <td>Shipping</td>
+                                    <td class="btn-radio">
+                                        <div class="radio-info">
+                                            <input type="radio" id="flat-rate" name="shipping" value="flat" checked>
+<label for="flat-rate">Flat Rate: <span>₹ 50</span></label>
+
+                                        </div>
+                                        <div class="radio-info">
+                                            <input type="radio" id="free-shipping" name="shipping" value="free">
+<label for="free-shipping">Free Shipping</label>
+                                    
+                                        </div>
+                                        <div class="btn-shipping">
+                                            <a href="#" title="">Calculate Shipping</a>
+                                        </div>
+                                        <p id="shipping-msg" style="color:green;"></p>
+                                    </td><!-- /.btn-radio -->
+                                </tr>
+                                <tr>
+                                    <td>Total</td>
+                                    <td class="price-total">
+
+₹ <span id="total">{{ cart_total_amount }}</span>
+</td>
+                                   
+                                </tr>
+                                <tr>
+{% comment %} <td colspan="2" style="text-align:right;">
+<button onclick="calculateTotal()" style="background-color:darkorange;color:white;padding:8px 15px;border:none;border-radius:5px;">
+Update Total
+</button>
+</td> {% endcomment %}
+
+<td colspan="2" class="update-btn-box" style="text-align:left;">
+<button onclick="calculateTotal()" class="update-btn">
+Update Total
+</button>
+</td>
+
+</tr>
+                            </body>
+                        </table>
+                       
+                            
+                            {% comment %} <a href="{% url 'core:checkout' %}" class="checkout" title="">Proceed to Checkout</a>
+                            {% endcomment %}
+                             <a href="{% url 'core:checkout' %}" onclick="return checkTotal()" class="checkout" title=""  style="background-color: orange; color: white;">Proceed to Checkout</a>
+                        </div><!-- /.btn-cart-totals -->
+                        </div><!-- /.btn-cart-totals -->
+                    </form><!-- /form -->
+                </div><!-- /.cart-totals -->
+            </div><!-- /.col-lg-4 -->
+        </div><!-- /.row -->
+    </div><!-- /.container -->
+</section><!-- /.flat-shop-cart -->
+
+<script>
+    let isUpdated = false;
+let flat = document.getElementById("flat-rate");
+let free = document.getElementById("free-shipping");
+
+let totalElement = document.getElementById("total");
+let message = document.getElementById("shipping-msg");
+
+function calculateTotal(){
+
+let subtotal = parseFloat(document.getElementById("subtotal").innerText);
+
+let shipping = 0;
+
+if(flat.checked){
+shipping = 50;
+message.innerText = "Flat rate shipping ₹50 applied";
+}
+
+if(free.checked){
+if(subtotal >= 500){
+shipping = 0;
+message.innerText = "🎉 You got Free Shipping!";
+}else{
+shipping = 0;
+message.innerText = "Free shipping only on orders above ₹500";
+}
+}
+
+let total = subtotal + shipping;
+totalElement.innerText = total;
+
+isUpdated = true;
+}
+
+flat.addEventListener("change", calculateTotal);
+free.addEventListener("change", calculateTotal);
+
+window.onload = calculateTotal;
+
+function checkTotal(){
+
+{% comment %} let subtotal = parseFloat(document.getElementById("subtotal").innerText);
+let total = parseFloat(document.getElementById("total").innerText); {% endcomment %}
+
+if(!isUpdated){
+
+alert("⚠️ Please click 'Update Total' before checkout");
+
+return false;
+
+}
+
+return true;
+
+}
+
+</script>
+
+
+

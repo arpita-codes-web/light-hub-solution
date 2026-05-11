@@ -1,0 +1,183 @@
+{% extends "partials/base.html" %}
+{% load static %}
+
+{% block content %}
+
+
+		<section class="flat-breadcrumb">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<ul class="breadcrumbs">
+							<li class="trail-item">
+								<a href="#" title="">Home</a>
+								<span><img src="{% static 'images/icons/arrow-right.png' %}" alt=""></span>
+							</li>
+							<li class="trail-item">
+								<a href="#" title="">Shop</a>
+								<span><img src="{% static 'images/icons/arrow-right.png' %}" alt=""></span>
+							</li>
+							<li class="trail-end">
+								<a href="#" title="">order</a>
+							</li>
+						</ul><!-- /.breacrumbs -->
+					</div><!-- /.col-md-12 -->
+				</div><!-- /.row -->
+			</div><!-- /.container -->
+		</section><!-- /.flat-breadcrumb -->
+
+		<section class="flat-checkout">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-7">
+						<div class="box-checkout">
+							
+							
+							<form action="{% url 'core:place-order' %}" method="POST" class="checkout">
+{% csrf_token %}
+							<div class="billing-fields">
+									<div class="fields-title">
+										<h3>Billing details</h3>
+										<span></span>
+										<div class="clearfix"></div>
+									</div><!-- /.fields-title -->
+									<div class="fields-content">
+										<div class="field-row">
+											<p class="field-one-half">
+												<label for="first-name">First Name *</label>
+												<input type="text" id="first-name" value="{{ user.first_name }}" name="first-name" placeholder="Ali" required>
+											</p>
+											<p class="field-one-half">
+												<label for="last-name">Last Name *</label>
+												<input type="text" id="last-name" name="last-name" value="{{ user.last_name }}" placeholder="Tufan" required>
+											</p>
+											<div class="clearfix"></div>
+										</div>
+										
+										<div class="field-row">
+											<p class="field-one-half">
+												<label for="email-address">Email Address *</label>
+												<input type="email" id="email-address" value="{{ user.email }}" name="email-address" required>
+											</p>
+											<p class="field-one-half">
+												<label for="phone">Phone *</label>
+												<input type="text" id="phone" value="{{ user.contact_no }}" name="phone" required>
+											</p>
+											<div class="clearfix"></div>
+										</div>
+										<div class="field-row">
+    <p class="field-one-half">
+        <label for="address">Address *</label>
+        <input type="text" id="address" name="address" placeholder="House / Flat / Street" required>
+    </p>
+
+    <p class="field-one-half">
+        <label for="area">Area *</label>
+        <input type="text" id="area" name="area" placeholder="Area in Ahmedabad" required>
+    </p>
+
+    <div class="clearfix"></div>
+</div>
+
+<div class="field-row">
+    <p class="field-one-half">
+        <label for="zipcode">Pin Code *</label>
+        <input type="text" id="zipcode" name="zipcode" placeholder="380001" required>
+    </p>
+
+    <div class="clearfix"></div>
+</div>
+<button type="submit" style="background-color:orange; padding:5px 20px; margin-top:20px;">
+Place Order (Cash on Delivery)
+</button>
+<a href="{% url 'core:payment' %}" onclick="return validateForm()" class="pay-btn">
+Pay Online
+</a>
+    
+    
+    								
+										
+										
+									</div><!-- /.fields-content -->
+								</div><!-- /.billing-fields -->
+								
+							</form><!-- /.checkout -->
+						</div><!-- /.box-checkout -->
+					</div><!-- /.col-md-7 -->
+					<div class="col-md-5">
+						<div class="cart-totals style2">
+							<h2><b>Your Order</b></h2><br>
+							<form method="get" accept-charset="utf-8">
+								<table class="product">
+									<thead>
+										<tr>
+											<th><b>Product</b></th>
+                                            <th><b>Qty</b></th>
+											<th><b>Total</b></th>
+										</tr>
+									</thead>
+									<tbody>
+                                        {% for product_id, item in cart_data.items %}
+										<tr>
+											<td>{{item.title}}</td>
+                                            <td>{{item.qty}}</td>
+											<td>₹ {{item.price}}</td>
+										</tr>
+                                        {% endfor %}
+										
+									</tbody>
+								</table><!-- /.product -->
+								<table>
+									<tbody>
+										{% comment %} <tr>
+											<td>Total</td>
+											<td class="subtotal">₹ {{cart_total_amount|floatformat:2}}</td>
+										</tr>
+										
+										<tr>
+											<td>Total</td>
+											<td class="price-total">₹ {{cart_total_amount|floatformat:2}}</td>
+										</tr> {% endcomment %}
+										<tr>
+<td>Subtotal</td>
+<td>₹ {{cart_total_amount|floatformat:2}}</td>
+</tr>
+
+<tr>
+<td>Shipping</td>
+<td>₹ {{shipping}}</td>
+</tr>
+
+<tr>
+<td>Total</td>
+<td class="price-total">₹ {{total|floatformat:2}}</td>
+</tr>
+									</tbody>
+								</table>
+							</form>
+						</div><!-- /.cart-totals style2 -->
+					</div><!-- /.col-md-5 -->
+				</div><!-- /.row -->
+			</div><!-- /.container -->
+		</section><!-- /.flat-checkout -->
+<script>
+function validateForm(){
+
+let first = document.getElementById("first-name").value.trim();
+let last = document.getElementById("last-name").value.trim();
+let email = document.getElementById("email-address").value.trim();
+let phone = document.getElementById("phone").value.trim();
+let address = document.getElementById("address").value.trim();
+let area = document.getElementById("area").value.trim();
+let pin = document.getElementById("zipcode").value.trim();
+
+if(!first || !last || !email || !phone || !address || !area || !pin){
+    alert("⚠️ Please fill all billing details before payment");
+    return false;
+}
+
+return true;
+}
+</script>
+		
+        {% endblock content %}

@@ -1,0 +1,42 @@
+{% extends "partials/base.html" %}
+{% load static %}
+
+{% block content %}
+    {% comment %} <section class="payment-success">
+        <div class="container text-center">
+            <h2 style="color: green;">🎉 Payment Successful!</h2><br><br>
+            <p>Thank you for your purchase. Your payment has been successfully processed.</p><br><br>
+            <p><strong>Payment ID:</strong> {{ payment_id }}</p>
+            
+            <a href="{% url 'core:order-detail' order.id %}" class="btn btn-primary">invoice</a>
+            
+        </div>
+    </section> {% endcomment %}
+    <section class="payment-success-section">
+    <div class="success-card">
+        
+        <div class="success-icon">🎉</div>
+
+        <h2>Payment Successful</h2>
+
+        <p class="msg">
+            Thank you for your purchase! Your payment has been successfully processed.
+        </p>
+
+        <div class="info-box">
+            <label>Payment ID</label>
+            <div class="value">{{ payment_id }}</div>
+        </div>
+
+        <div class="info-box">
+            <label>Status</label>
+            <div class="value success">Paid</div>
+        </div>
+
+        <a href="{% url 'core:order-detail' order.id %}" class="invoice-btn">
+            View Invoice
+        </a>
+
+    </div>
+</section>
+{% endblock content %} 

@@ -1,0 +1,106 @@
+{% extends "partials/base.html" %}
+{% load static %}
+
+{% block content %}
+
+
+		<section class="flat-breadcrumb">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<ul class="breadcrumbs">
+							<li class="trail-item">
+								<a href="#" title="">Home</a>
+								<span><img src="images/icons/arrow-right.png" alt=""></span>
+							</li>
+							<li class="trail-end">
+								<a href="#" title="">Top category</a>
+							</li>
+						</ul><!-- /.breacrumbs -->
+					</div><!-- /.col-md-12 -->
+				</div><!-- /.row -->
+			</div><!-- /.container -->
+		</section><!-- /.flat-breadcrumb -->
+
+		<section class="flat-slider style2">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="slider owl-carousel style2">
+							<div class="slider-item style3">
+								<div class="item-text">
+									<div class="header-item">
+										<p>You can build the banner for other category</p>
+										<h2 class="name"><span>CATEGORIES</span></h2>
+									</div>
+								</div>
+								<div class="item-image">
+									<img src="images/banner_boxes/07.png" alt="">
+								</div>
+								<div class="clearfix"></div>
+							</div><!-- /.slider-item style3 -->
+							<div class="slider-item style3">
+								<div class="item-text">
+									<div class="header-item">
+										<p>You can build the banner for other category</p>
+										<h2 class="name"><span>CATEGORIES</span></h2>
+									</div>
+								</div>
+								<div class="item-image">
+									<img src="images/banner_boxes/07.png" alt="">
+								</div>
+								<div class="clearfix"></div>
+							</div><!-- /.slider-item style3 -->
+						</div><!-- /.slider -->
+					</div><!-- /.col-md-12 -->
+				</div><!-- /.row -->
+			</div><!-- /.container -->
+		</section><!-- /.flat-slider style2 -->
+
+		<section class="flat-row flat-imagebox">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="flat-row-title">
+							<h3>{{categories.count}} Categories</h3>
+						</div>
+					</div><!-- /.cl-md-12 -->
+				</div><!-- /.row -->
+				<div class="row">
+                    {% for c in categories %}
+					<div class="col-md-6 col-lg-4">
+						<div class="imagebox style1 v1">
+							<div class="box-image">
+								<a href="{% url 'core:category-product-list' c.cid %}" title="">
+									<img src="{{c.image.url}}" alt="" height="100px" width="150px">
+								</a>
+							</div><!-- /.box-image -->
+							<div class="box-content">
+								<div class="cat-name">
+									<a href="{% url 'core:category-product-list' c.cid %}">
+    									{{ c.title }}
+									</a> 
+									<a href="{% url 'core:category-product-list' c.cid %}" title="">{{c.title}}</a> 
+								</div>
+								<ul class="cat-list">
+									<li><a href="{% url 'core:category-product-list' c.cid %}" title="">{{ c.products.count }} Product{{ c.products.count|pluralize}}</a></li>
+								</ul>
+								<div class="btn-more">
+									<a href="{% url 'core:category-product-list' c.cid %}" title="">See all</a>
+								</div>
+							</div><!-- /.box-content -->
+						</div><!-- /.imagebox style1 -->
+					</div><!-- /.col-md-6 col-lg-4 -->
+                    {% endfor %}
+				</div><!-- /.row -->
+			</div><!-- /.container -->
+		</section><!-- /.flat-imagebox style1 --><br><br>
+		<br><br>
+		<br>
+		<br><br>
+		<br><br>
+		<br>
+
+		
+
+		{% endblock content %}

@@ -1,0 +1,63 @@
+{% extends "partials/base.html" %}
+{% load static %}
+
+{% block content %}
+
+		<section class="flat-breadcrumb">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<ul class="breadcrumbs">
+							<li class="trail-item">
+								<a href="#" title="">Home</a>
+								<span><img src="{% static 'images/icons/arrow-right.png' %}" alt=""></span>
+							</li>
+							<li class="trail-end">
+								<a href="#" title="">log in</a>
+							</li>
+							
+						</ul><!-- /.breacrumbs -->
+					</div><!-- /.col-md-12 -->
+				</div><!-- /.row -->
+			</div><!-- /.container -->
+		</section><!-- /.flat-breadcrumb -->
+
+		<section class="flat-account">
+			<div class="container" style="margin-left:350px ;">
+				<div class="row">
+					<div class="col-md-6">
+					
+							<div class="form-login" style="background:white; padding:30px; border-radius:20px;">
+							<div class="title mb-5">
+								<h1><strong>Login</strong></h1>
+							</div>
+							<form  method="POST" id="form-login" accept-charset="utf-8">
+                                {% csrf_token %}
+								<div class="form-box">
+									<label for="name-login">Username or email address</label>
+									<input type="text" required name="email" id="email" placeholder="usernameoremail">
+								</div><!-- /.form-box -->
+								<div class="form-box">
+									<label for="password-login">Password</label>
+									<input type="password" required name="password" id="password"  placeholder="******">
+								</div><!-- /.form-box -->
+								<div class="form-box checkbox">
+									<input type="checkbox" id="remember" checked name="remember">
+									<label for="remember">Remember me</label>
+								</div><!-- /.form-box -->
+								<div class="form-box">
+									<button type="submit" class="login">Login</button>
+									<a href="{% url 'core:password_reset_form' %}" title="">Forgot password?</a>
+								</div><!-- /.form-box -->
+								<p>Don't have an account?<a href="{% url 'userauths:sign-up' %}">create here</a></p>
+							</form><!-- /#form-login -->
+						</div><!-- /.form-login -->
+					</div><!-- /.col-md-6 -->
+					
+				</div><!-- /.row -->
+			</div><!-- /.container -->
+		</section><!-- /.flat-account -->
+
+		
+
+		{% endblock content %}

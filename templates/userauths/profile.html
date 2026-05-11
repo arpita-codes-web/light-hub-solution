@@ -1,0 +1,53 @@
+{% extends "partials/base.html" %}
+{% load static %}
+
+{% block content %}
+
+<section class="flat-account">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card p-4 shadow-lg rounded-3">
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-success">{{ message }}</div>
+                        {% endfor %}
+                    {% endif %}
+
+                    <div class="title text-center">
+                        <h1><strong>Update Profile</strong></h1>
+                    </div>
+                    <br>
+                    
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="form-box">{{ u_form.first_name }}</div><br>
+                        <div class="form-box">{{ u_form.last_name }}</div><br>
+                        <div class="form-box">{{ u_form.username }}</div><br>
+                        <div class="form-box">{{ u_form.email }}</div><br>
+                        <div class="form-box">{{ p_form.address }}</div><br>
+                        <div class="form-box">{{ p_form.contact_no }}</div><br>
+                       
+                        <br>
+                       
+                        <div class="text-center mt-3">
+    <button type="submit" class="profile-btn">Update Profile</button>
+</div>
+                         
+                        
+                    </form>
+
+                    <div class="text-center mt-4">
+                        <a href="/" class="profile-btn">Back To Home</a>
+
+                       
+                        <a href="{% url 'userauths:sign-out' %}" class="profile-btn">Log Out</a>
+                       
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+   
+</section>
+{% endblock content %}

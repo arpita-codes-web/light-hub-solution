@@ -1,0 +1,433 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-US" lang="en-US"><!--<![endif]-->
+
+<head>
+	<style>
+		.custom-icon {
+		  font-size: 200px; /* Icon ka size badhane ke liye */
+		  color: black; /* Border ka color */
+		  -webkit-text-fill-color: transparent; /* Fill ko none karne ke liye */
+		  -webkit-text-stroke: 1px gray; /* Border dene ke liye */
+		}
+	  </style>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">	
+
+	<title> Home Page</title>
+
+	
+
+	
+	<!-- Mobile Specific Metas -->
+	
+	<!-- Boostrap style -->
+	<link rel="stylesheet" type="text/css" href="{% static 'stylesheets/bootstrap.min.css'%}">
+
+	<!-- Theme style -->
+	<link rel="stylesheet" type="text/css" href="{% static 'stylesheets/style.css'%}">
+
+	<!-- Reponsive -->
+	<link rel="stylesheet" type="text/css" href="{% static 'stylesheets/responsive.css'%}">
+
+	 <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+
+
+	
+	
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+	
+
+	<!-- Style -->
+	<link rel="stylesheet" type="text/css" href="{% static 'assets/css/main-style.css' %}">
+
+	<link rel="shortcut icon" href="{% static 'favicon/favicon.png' %}">
+
+	<link rel="stylesheet" type="text/css" href="{% static 'assets/css/custom.css' %}">
+
+	  
+
+
+
+
+</head>
+
+
+<body class="header_sticky">
+	<div class="boxed">
+
+		<section id="header" class="header">
+			
+			<div class="header-middle">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-3">
+							<div id="logo" class="logo">
+								<a href="index.html" title="">
+									<img src="{% static 'images/logos/logo.jpg' %}" alt="" style="margin-top: -10px;">
+								</a>
+							</div><!-- /#logo -->
+						</div><!-- /.col-md-3 -->
+						<div class="col-md-6">
+							<div class="top-search" >
+								<form action="{% url 'core:search' %}" method="GET" class="form-search"
+									accept-charset="utf-8">
+									<div class="cat-wrap">
+										
+									</div><!-- /.cat-wrap -->
+									<div class="box-search"> 
+										<input type="text" name="q" placeholder="Search what you looking for ?">
+										<span class="btn-search">
+											<button type="submit" class="waves-effect"><img
+													src="{% static 'images/icons/search.png' %}" alt=""></button>
+										</span>
+
+									</div><!-- /.box-search -->
+								</form>
+							</div><!-- /.top-search -->
+						</div><!-- /.col-md-6 -->
+						<div class="col-md-3">
+							<div class="box-cart">
+								<div class="inner-box">
+									<ul class="menu-compare-wishlist" style="font-size: 1.2rem;">
+										{% if request.user.is_authenticated %}
+								<li>
+									<a href="{% url 'userauths:profile' %}" title="Profile">
+										<i class="fa-solid fa-user"></i>
+									</a>
+								</li>
+								{% else %}
+								<li>
+									<a href="{% url 'userauths:sign-in' %}" title="Login">
+										<i class="fa-solid fa-user"></i>
+									</a>
+								</li>
+								{% endif %}
+								<li class="wishlist pt-2">
+    								<a href="{% url 'core:wishlist' %}" title="">
+        								<i class="fa-solid fa-heart"></i>
+    								</a>
+								</li>
+								
+										
+									</ul><!-- /.menu-compare-wishlist -->
+								</div><!-- /.inner-box -->
+								<div class="inner-box">
+									<a href="{% url 'core:cart' %}" title="">
+										<div class="icon-cart" style="font-size: 1.2rem;">
+											<i class="fa-solid fa-cart-shopping"></i>
+											<span class="cart-items-count">{{ request.session.cart_data_obj|length}}
+												</span>
+										</div>
+
+									</a>
+									<div class="dropdown-box">
+
+										<div class="btn-cart">
+											<a href="{% url 'core:cart' %}" class="view-cart" title="">View Cart</a>
+											<a href="{% url 'core:checkout' %}" class="check-out" title="">Checkout</a>
+										</div>
+									</div>
+								</div><!-- /.inner-box -->
+							</div><!-- /.box-cart -->
+						</div><!-- /.col-md-3 -->
+
+					</div><!-- /.row -->
+				</div><!-- /.container -->
+			</div><!-- /.header-middle -->
+			<div class="header-bottom">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-3 col-2">
+							<div id="mega-menu">
+								<div class="btn-mega"><span></span>ALL CATEGORIES</div>
+								<ul class="menu">
+									{% for c in categories %}
+									<li>
+										<a href="{% url 'core:category-product-list' c.cid %}" title=""
+											class="dropdown">
+											
+											<span class="menu-title">
+												{{c.title}}
+											</span>
+										</a>
+									</li>
+									{% endfor %}
+								</ul>
+
+								
+
+
+
+
+
+							</div>
+						</div><!-- /.col-md-3 -->
+						<div class="col-md-9 col-10">
+							<div class="nav-wrap">
+								<div id="mainnav" class="mainnav">
+									<ul class="menu">
+										<li class="column-1">
+											<a href="{% url 'core:index' %}" title="">Home</a>
+										</li><!-- /.column-1 -->
+																				<li class="column-1">
+											<a href="{% url 'core:product-list' %}" title="">Products</a>
+										</li><!-- /.column-1 -->
+										
+										
+										<li class="column-1">
+											 <a href="/contact/">Contact</a>
+										</li><!-- /.column-1 -->
+
+										<li class="column-1">
+											 <a href="/wishlist/">wishlist</a>
+										</li>
+				
+										</li>
+									</ul><!-- /.menu -->
+								</div><!-- /.mainnav -->
+							</div><!-- /.nav-wrap -->
+							
+							<div class="btn-menu">
+								<span></span>
+							</div><!-- //mobile menu button -->
+						</div><!-- /.col-md-9 -->
+					</div><!-- /.row -->
+				</div><!-- /.container -->
+				{% if messages %}
+				{% for message in messages %}
+				<div class="alert alert-{{message.tags}}">
+					<strong>{{message}}</strong>
+				</div>
+				{% endfor %}
+				{% endif %}
+				<script>
+					setTimeout(() => {
+						$(".alert").alert("close")
+					}, 3000)
+				</script>
+
+			</div><!-- /.header-bottom -->
+		</section><!-- /#header -->
+
+		{% block content %}
+
+
+
+		{% endblock content %}
+
+		<footer>
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-3 col-md-6">
+<div class="widget-ft widget-about">
+
+<h3>Contact Us</h3>
+
+<div class="widget-content">
+
+<div class="info">
+
+<p>
+<i class="fa-solid fa-phone" style="color:orange; margin-right:8px;"></i>
+<strong>Call Us:</strong> +91 7861865776
+</p>
+
+<p>
+<i class="fa-solid fa-envelope" style="color:orange; margin-right:8px;"></i>
+<strong>Email:</strong> support@orsale.com
+</p>
+
+<p>
+<i class="fa-solid fa-location-dot" style="color:orange; margin-right:8px;"></i>
+<strong>Address:</strong><br>
+FF-3, Gurukul Road, Memnagar<br>
+Ahmedabad - 380052
+</p>
+
+</div>
+
+<div class="social-icons" style="margin-top:15px;">
+
+<a href="#"><i class="fa-brands fa-facebook"></i></a>
+<a href="#"><i class="fa-brands fa-instagram"></i></a>
+<a href="#"><i class="fa-brands fa-twitter"></i></a>
+<a href="#"><i class="fa-brands fa-youtube"></i></a>
+
+</div>
+
+</div>
+
+</div>
+</div>
+					
+					<div class="col-lg-3 col-md-6">
+						<div class="widget-ft widget-categories-ft">
+							<div class="widget-title">
+							<h3>Customer Service</h3>
+
+<ul>
+<li><a href="{% url 'core:contact' %}">Contact Us</a></li>
+<li><a href="{% url 'core:return-policy' %}">Return Policy</a></li>
+<li><a href="{% url 'core:privacy-policy' %}">Privacy Policy</a></li>
+<li><a href="{% url 'core:term-condition' %}">Terms & Conditions</a></li>
+</ul>
+							
+							
+							</div>
+						</div><!-- /.widget-categories-ft -->
+					</div><!-- /.col-lg-3 col-md-6 -->
+					<div class="col-lg-2 col-md-6">
+						<div class="widget-ft widget-menu">
+							<div class="widget-title">
+								
+
+
+<h3>My Account</h3>
+
+<ul>
+
+<li>
+<a href="{% url 'userauths:profile' %}">
+My Profile
+</a>
+</li>
+
+<li>
+<a href="{% url 'core:wishlist' %}">
+Wishlist
+</a>
+</li>
+
+<li>
+<a href="{% url 'core:cart' %}">
+Shopping Cart
+</a>
+</li>
+
+{% if order %}
+<li>
+    <a href="{% url 'core:order-detail' order.id %}">track order</a>
+</li>
+{% endif %}
+					
+								<li>
+									<a href="{% url 'core:contact' %}">Contact us</a>
+								</li>
+								{% if request.user.is_authenticated %}
+								<li>
+									<a href="{% url 'userauths:sign-out' %}" title="">
+										Sign out
+									</a>
+								</li>
+								{% else %}
+								<li>
+									<a href="{% url 'userauths:sign-in' %}" title="">
+										Sign in
+									</a>
+								</li>
+								{% endif %}
+								
+							
+
+						
+							</ul>
+						</div><!-- /.widget-menu -->
+					</div><!-- /.col-lg-2 col-md-6 -->
+
+					<div class="col-lg-3 col-md-6">
+						<div class="widget-ft widget-categories-ft">
+							<div class="widget-title">
+						
+							</div>
+						
+							
+							
+							</div>
+							
+						</div><!-- /.widget-categories-ft -->
+					</div><!-- /.col-lg-3 col-md-6 -->
+
+
+						<div class="col-lg-2 col-md-6">
+						<div class="widget-ft widget-menu">
+							<div class="widget-title">
+								<h3>Categories</h3>
+							</div>
+							<ul>
+{% for c in categories %}
+<li>
+<a href="{% url 'core:category-product-list' c.cid %}">
+{{ c.title }}
+</a>
+</li>
+{% endfor %}
+</ul>
+					
+						</div><!-- /.widget-menu -->
+					</div><!-- /.col-lg-2 col-md-6 -->
+
+					</div><!-- /.row -->
+				
+			</div><!-- /.container -->
+		</footer><!-- /footer -->
+
+		<section class="footer-bottom" >
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<p class="copyright"> All Rights Reserved © Orsale LED light 2026</p>
+						<p class="btn-scroll">
+							<a href="#" title="">
+								<img src="{% static 'images/icons/top.png' %}" alt="">
+							</a>
+						</p>
+					</div><!-- /.col-md-12 -->
+				</div><!-- /.row -->
+			</div><!-- /.container -->
+		</section><!-- /.footer-bottom -->
+
+	</div><!-- /.boxed -->
+
+	<!-- Javascript -->
+	<script type="text/javascript" src="{% static 'javascript/jquery.min.js' %}"></script>
+	<script type="text/javascript" src="{% static 'javascript/function.js' %}"></script>
+	    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.7/js/tether.min.js"></script>
+	<script type="text/javascript" src="{% static 'javascript/bootstrap.min.js' %}"></script>
+	
+	<script type="text/javascript" src="{% static 'javascript/owl.carousel.js' %}"></script>
+	<script type="text/javascript" src="{% static 'javascript/smoothscroll.js' %}"></script>
+	    <script src="https://cdnjs.cloudflare.com/ajax/libs/waves/0.7.6/waves.min.js"></script>
+	<!-- Plugin --> 
+	<script src="{% static 'assets/js/plugin.js' %}"></script>
+	<!-- Main js-->
+	<script src="{% static 'assets/js/mian.js' %}"></script> 
+	<script type="text/javascript" src="{% static 'javascript/main.js' %}"></script>
+	
+	
+
+
+
+<script>
+$('.slider').owlCarousel({
+items:1,
+loop:true,
+autoplay:true,
+autoplayTimeout:3000
+});
+</script>
+
+
+
+
+
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+</body>
+
+</html>

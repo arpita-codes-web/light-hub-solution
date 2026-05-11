@@ -1,0 +1,284 @@
+{% extends "partials/base.html" %}
+{% load static %}
+
+{% block content %}
+
+<section class="flat-breadcrumb">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<ul class="breadcrumbs">
+					<li class="trail-item">
+						<a href="#" title="">Home</a>
+						<span><img src="{% static 'images/icons/arrow-right.png' %}" alt=""></span>
+					</li>
+					<li class="trail-item">
+						<a href="#" title="">Shop</a>
+						<span><img src="{% static 'images/icons/arrow-right.png' %}" alt=""></span>
+					</li>
+					<li class="trail-end">
+						<a href="#" title="">Product-detail</a>
+					</li>
+				</ul><!-- /.breacrumbs -->
+			</div><!-- /.col-md-12 -->
+		</div><!-- /.row -->
+	</div><!-- /.container -->
+</section><!-- /.flat-breadcrumb -->
+
+<section class="flat-product-detail">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-6">
+				<div class="flexslider">
+					<ul class="slides">
+						<!-- Main Product Image -->
+						<li data-thumb="{{ p.image.url }}">
+							<a href="#" class="zoom">
+								<img src="{{ p.image.url }}" alt="Main Product Image" width="400" height="300">
+							</a>
+							<span>NEW</span>
+						</li>
+
+						<!-- Additional Images -->
+
+						{% for img in p_image %}
+						<li data-thumb="{{ img.images.url }}">
+							<a href="#" class="zoom">
+								<img src="{{ img.images.url }}" alt="Product Image" width="400" height="300">
+							</a>
+						</li>
+						{% endfor %}
+					</ul><!-- /.slides -->
+				</div><!-- /.flexslider -->
+
+			</div><!-- /.col-md-6 -->
+			<div class="col-md-6">
+				<div class="product-detail style4">
+					<div class="header-detail">
+						<h4 class="name">{{p.title}}</h4>
+						<div class="category">
+							{{p.category.title}}
+						</div>
+						<div class="reviewed">
+							<div class="review">
+								<div class="queue">
+									<i class="fa fa-star" aria-hidden="true"></i>
+									<i class="fa fa-star" aria-hidden="true"></i>
+									<i class="fa fa-star" aria-hidden="true"></i>
+									<i class="fa fa-star" aria-hidden="true"></i>
+									<i class="fa fa-star" aria-hidden="true"></i>
+								</div>
+								
+							</div>
+							<div class="status-product">
+								Availablity <span>{{p.stock_count}} item in stock</span>
+							</div>
+						</div><!-- /.reviewed -->
+					</div><!-- /.header-detail -->
+					<div class="content-detail">
+						<div class="price">
+							
+							<div class="sale">
+								<span>₹</span><span class="current-product-price-{{ p.id }}">{{p.price}}</span>
+								<span class="old-price">₹{{ p.old_price }}</span>
+							</div>
+						</div>
+						<div class="info-text">
+							{{p.description|truncatechars:100}}
+						</div>
+						<div class="product-id">
+							SKU: <span class="id">{{p.sku}}</span>
+						</div>
+					</div><!-- /.content-detail -->
+
+
+					<div class="footer-detail">
+						
+						<input type="number" value="1" id="product-quanlity" min="1" max="{{p.stock_count}}" class="w-25 mb-10 product-quantity-{{ p.id }}">
+					
+						<div class="box-cart style2">
+							<div class="btn-add-cart detail-buttons">
+								
+   
+								 <input type="hidden" value="1" id="product-quantity" class="product-quantity-{{ p.id }}">
+												<input type="hidden" value="{{p.pid}}" class="product-pid-{{ p.id }}">
+												<input type="hidden" value="{{p.image.url}}" class="product-image-{{ p.id }}">
+												<input type="hidden" value="{{p.id}}" class="product-id-{{ p.id }}">
+												<input type="hidden" value="{{p.title}}" class="product-title-{{ p.id }}">
+												<button style="background-color: rgb(225, 80, 32);" 
+class="add-to-cart-btn" 
+data-product-id="{{ p.id }}">
+<img src="{% static 'images/icons/add-cart.png' %}"> Add to Cart
+</button>
+<button class="add-to-wishlist-btn" data-product-id="{{p.id}}">
+Wishlist
+</button>
+								
+							</div>
+						</div><!-- /.box-cart style2 -->
+						
+					</div><!-- /.footer-detail -->
+				</div><!-- /.product-detail style4 -->
+			</div><!-- /.col-md-6 -->
+		</div><!-- /.row -->
+	</div><!-- /.container -->
+</section><!-- /.flat-product-detail -->
+
+
+<section class="flat-product-content">
+	<ul class="product-detail-bar">
+		<li class="active">Description</li>
+		
+		
+	</ul><!-- /.product-detail-bar -->
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="description-text">
+					<div class="box-text">
+						<p>{{p.description}}</p>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		
+
+		<div class="row">
+			<div class="col-md-6">
+				<div class="rating">
+					<div class="title">
+						Based on {{reviews.count}} reviews
+					</div>
+					<div class="score">
+						<div class="average-score">
+							<p class="numb">{{average_rating.rating|floatformat:1}}</p>
+							<p class="text">Average score</p>
+						</div>
+						
+					</div>
+					
+				</div><!-- /.rating -->
+			</div><!-- /.col-md-6 -->
+			<div class="col-md-6">
+				{% if request.user.is_authenticated and has_bought %}
+				{% if make_review %}
+				<div class="form-review">
+					<div class="title add-review">
+						Add a review
+					</div>
+					
+					<strong class="text-success" id="review-res"></strong>
+					<div class="your-rating queue">
+						<span>Your Rating</span>
+						<i class="fa fa-star" aria-hidden="true"></i>
+						<i class="fa fa-star" aria-hidden="true"></i>
+						<i class="fa fa-star" aria-hidden="true"></i>
+						<i class="fa fa-star" aria-hidden="true"></i>
+						<i class="fa fa-star" aria-hidden="true"></i>
+					</div>
+
+
+					<form class="hide-comment-form" id="forms" action="{% url 'core:ajax-add-review' p.pid %}"
+						method="POST" accept-charset="utf-8">
+						{% csrf_token %}
+						<div>
+							{{review_form.review}}
+						</div>
+						<div>
+							{{review_form.rating}}
+						</div>
+
+						
+						<div class="btn-submit">
+							<button type="submit">Add Review</button>
+						</div>
+					</form>
+
+				</div><!-- /.form-review -->
+				{% else %}
+        <p>You already submitted review</p>
+    {% endif %}
+
+{% else %}
+    <p style="color:red;">You can review only after purchasing this product</p>
+{% endif %}
+			</div><!-- /.col-md-6 -->
+			
+			
+			
+			<div class="col-md-12">
+
+				<ul class="review-list">
+					{% for r in reviews %}
+					<li>
+						<div class="review-metadata">
+							<div class="name">
+								{{ r.user.get_full_name|default:r.user.username }} : <span>{{r.date|date:"M d, Y"}}</span>  
+					
+							</div>
+							<div class="queue">
+								{% for s in r.rating|ljust:r.rating %}
+								<i class="fa fa-star text-warning"></i>
+								{% endfor %}
+							</div>
+						</div><!-- /.review-metadata -->
+						<div class="review-content">
+							<p>
+								{{r.review}}
+							</p>
+						</div><!-- /.review-content -->
+					</li>
+					{% endfor %}
+				</ul><!-- /.review-list -->
+
+			</div><!-- /.col-md-12 -->
+		</div><!-- /.row -->
+
+	</div>
+</section><!-- /.flat-product-content -->
+
+
+
+<section class="flat-imagebox style4">
+	<div class="container">
+		<div class="row">
+			{% if products %}
+			<div class="col-md-12">
+				<div class="flat-row-title">
+					<h3>Related Products</h3>
+				</div>
+			</div><!-- /.col-md-12 -->
+			{% endif %}
+		</div><!-- /.row -->
+		<div class="row">
+			<div class="col-md-12">
+				<div class="owl-carousel-3">
+					{% for p in products %}
+					<div class="imagebox style4">
+						<div class="box-image">
+							<a href="{% url 'core:product-detail' p.pid %}" title="">
+								<img src="{{p.image.url}}" alt="" height="100px" width="100px">
+							</a>
+						</div><!-- /.box-image -->
+						<div class="box-content">
+							<div class="cat-name">
+								<a href="{% url 'core:product-detail' p.pid %}" title="">{{p.category.title}}</a>
+							</div>
+							<div class="product-name">
+								<a href="{% url 'core:product-detail' p.pid %}" title="">{{p.title}}<br />G2356</a>
+							</div>
+							<div class="price">
+								<span class="sale " id="current-product-price">{{p.price}}</span>
+								<span class="regular">{{p.old_price}}</span>
+							</div>
+						</div><!-- /.box-content -->
+					</div><!-- /.imagebox style4 -->
+					{% endfor %}
+				</div><!-- /.owl-carousel-3 -->
+			</div><!-- /.col-md-12 -->
+		</div><!-- /.row -->
+	</div><!-- /.container -->
+</section><!-- /.flat-imagebox style4 -->
+
+{% endblock content %}

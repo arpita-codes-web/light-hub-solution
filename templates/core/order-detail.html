@@ -1,0 +1,226 @@
+{% extends "partials/base.html" %}
+{% block content %}
+
+<section class="order-detail" style="padding:40px 0;">
+<div class="container">
+
+<div style="background:#fff;padding:30px;border-radius:8px;box-shadow:0 0 10px rgba(0,0,0,0.08);">
+
+<h2 style="margin-bottom:20px;color:#333;">Order Detail</h2>
+
+<div style="display:flex;justify-content:space-between;margin-bottom:20px;">
+<div>
+<strong>Order ID :</strong> {{order.id}}
+</div>
+
+<div>
+<strong>Order Status :</strong>
+<span style="color:darkorange;font-weight:bold;">
+{{order_status}}
+</span>
+</div>
+</div>
+
+<hr>
+
+<h3 style="margin-top:20px;">Products Ordered</h3>
+
+<table style="width:100%;margin-top:15px;border-collapse:collapse;">
+
+<thead style="background:#f5f5f5;">
+<tr>
+<th style="padding:10px;border:1px solid #ddd;">Product</th>
+<th style="padding:10px;border:1px solid #ddd;">Price</th>
+<th style="padding:10px;border:1px solid #ddd;">Quantity</th>
+<th style="padding:10px;border:1px solid #ddd;">Total</th>
+</tr>
+</thead>
+
+<tbody>
+
+{% for item in items %}
+
+<tr>
+<td style="padding:10px;border:1px solid #ddd;">
+{{item.item}}
+</td>
+
+<td style="padding:10px;border:1px solid #ddd;">
+₹ {{item.price}}
+</td>
+
+<td style="padding:10px;border:1px solid #ddd;">
+{{item.qty}}
+</td>
+
+<td style="padding:10px;border:1px solid #ddd;color:darkorange;font-weight:bold;">
+₹ {{ item.total }}
+</td>
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table><br>
+
+<hr>
+
+<h3>Order Summary :</h3><br>
+
+<p><strong>Subtotal :</strong> ₹ {{subtotal}}</p>
+
+<p><strong>Shipping :</strong> ₹ {{shipping}}</p>
+
+<p style="color:darkorange;font-size:18px;">
+<strong>Grand Total :</strong> ₹ {{grand_total}}
+</p>
+
+<hr style="margin:25px 0;">
+
+<h3>Tracking Status</h3>
+
+<div style="margin-top:15px;">
+
+{% if order_status == "processing" %}
+
+<p style="color:#555;">🚀 Your order is currently being processed.</p>
+
+{% elif order_status == "shipped" %}
+
+<p style="color:#555;">📦 Your order has been shipped and is on the way.</p>
+
+{% elif order_status == "delivered" %}
+
+<p style="color:green;">✅ Your order has been delivered successfully.</p>
+
+{% else %}
+
+<p style="color:#777;">⏳ Order status is currently unavailable.</p>
+
+{% endif %}
+
+<p class="mt-3">
+Estimated Delivery Time: <strong>3-5 Days</strong>
+</p>
+
+</div>
+
+<div style="margin-top:30px;">
+<a href="/" style="background:darkorange;color:#fff;padding:10px 20px;border-radius:5px;text-decoration:none;">
+Continue Shopping
+</a>
+</div>
+
+</div>
+
+</div>
+</section>
+
+{% endblock %}
+{% comment %} {% extends "partials/base.html" %}
+{% block content %}
+
+<section class="order-detail" style="padding:40px 0;">
+<div class="container">
+
+<div style="background:#fff;padding:30px;border-radius:8px;box-shadow:0 0 10px rgba(0,0,0,0.08);">
+
+<h2 style="margin-bottom:20px;color:#333;">Order Detail</h2>
+
+<div style="display:flex;justify-content:space-between;margin-bottom:20px;">
+<div>
+<strong>Order ID :</strong> {{order.id}}
+</div>
+
+<div>
+<strong>Status :</strong>
+<span style="color:darkorange;font-weight:bold;">
+{{order_status}}
+</span>
+</div>
+</div>
+
+<hr>
+
+<h3 style="margin-top:20px;">Products Ordered</h3>
+
+<table style="width:100%;margin-top:15px;border-collapse:collapse;">
+
+<thead style="background:#f5f5f5;">
+<tr>
+<th style="padding:10px;border:1px solid #ddd;">Product</th>
+<th style="padding:10px;border:1px solid #ddd;">Price</th>
+<th style="padding:10px;border:1px solid #ddd;">Quantity</th>
+<th style="padding:10px;border:1px solid #ddd;">Total</th>
+</tr>
+</thead>
+
+<tbody>
+
+{% for item in items %}
+
+<tr>
+<td style="padding:10px;border:1px solid #ddd;">
+{{item.item}}
+</td>
+
+<td style="padding:10px;border:1px solid #ddd;">
+₹ {{item.price}}
+</td>
+
+<td style="padding:10px;border:1px solid #ddd;">
+{{item.qty}}
+</td>
+
+<td style="padding:10px;border:1px solid #ddd;color:darkorange;font-weight:bold;">
+₹ {{item.price|floatformat:2}}
+</td>
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+<hr style="margin:25px 0;">
+
+<h3>Tracking Status</h3>
+
+<div style="margin-top:15px;">
+
+{% if order_status == "process" %}
+
+<p style="color:#555;">🚀 Your order is currently being processed.</p>
+
+{% elif order_status == "shipped" %}
+
+<p style="color:#555;">📦 Your order has been shipped.</p>
+
+{% elif order_status == "delivered" %}
+
+<p style="color:green;">✅ Your order has been delivered successfully.</p>
+
+{% else %}
+
+<p style="color:#777;">⏳ Order status is currently unavailable.</p>
+{% endif %}
+
+</div>
+
+<div style="margin-top:30px;">
+<a href="/" style="background:darkorange;color:#fff;padding:10px 20px;border-radius:5px;text-decoration:none;">
+Continue Shopping
+</a>
+</div>
+
+</div>
+
+</div>
+</section>
+
+{% endblock %}
+
+
+ {% endcomment %}

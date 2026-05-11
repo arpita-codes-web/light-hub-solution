@@ -1,0 +1,66 @@
+{% extends "partials/base.html" %}
+{% load static %}
+
+{% block content %}
+
+		<section class="flat-breadcrumb">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<ul class="breadcrumbs">
+							<li class="trail-item">
+								<a href="#" title="">Home</a>
+								<span><img src="images/icons/arrow-right.png" alt=""></span>
+							</li>
+							
+							<li class="trail-end">
+								<a href="#" title="">Register</a>
+							</li>
+						</ul><!-- /.breacrumbs -->
+					</div><!-- /.col-md-12 -->
+				</div><!-- /.row -->
+			</div><!-- /.container -->
+		</section><!-- /.flat-breadcrumb -->
+
+		<section class="flat-account">
+			<div class="container">
+				<div class="row justify-content-center">
+					<div class="col-md-6">
+						<div class="card p-4 shadow-lg rounded-3">
+							{% if form.errors %}
+							<div class="alert alert-danger">
+								<strong>{{form.errors}}</strong>
+							</div>
+							{% endif %}
+
+							<div class="title text-center">
+								<h1><strong>Create an account</strong></h1>
+							</div><br>
+							<form  method="post" method="POST" id="form-register" accept-charset="utf-8">
+								{% csrf_token %}
+								<div class="form-box">{{ form.first_name }}</div><br>
+								<div class="form-box">{{ form.last_name }}</div><br>
+								<div class="form-box">{{ form.email }}</div><br>
+								<div class="form-box">{{ form.password1 }}</div><br>
+								<div class="form-box">{{ form.password2 }}</div><br>
+								<div class="form-box">{{ form.address }}</div><br>
+								<div class="form-box">{{ form.contact_no }}</div><br>
+
+								<div class="form-box">
+									<button type="submit" class="register" style="background-color:red;">Register</button>
+									<p>Already have an account?<a href="{% url 'userauths:sign-in' %}">Login</a></p>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div><br><br>
+		
+		</section>
+
+		<br>
+		<br>
+		
+			
+
+		{% endblock content %}

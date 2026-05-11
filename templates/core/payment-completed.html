@@ -1,0 +1,125 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="description" content="different types of invoice/bill/tally designed with friendly and markup using modern technology, you can use it on any type of website invoice, fully responsive and w3 validated.">
+    <meta name="keywords" content="bill , receipt, tally, invoice, cash memo, invoice html, invoice pdf, invoice print, invoice templates, multipurpose invoice, template, booking invoice, general invoice, clean invoice, catalog, estimate, proposal">
+    <meta name="author" content="initTheme">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>initBill - invoice & Receipt HTML Template </title>
+    <link rel="icon" type="image/x-icon" sizes="20x20" href="assets/images/icon/favicon.png">
+    
+    <!-- Style -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main-style.css' %}">
+</head>
+<body class="section-bg-one">
+    <main class="container invoice-wrapper" id="download-section">
+        <!-- invoice Top -->
+        <div class="invoice-top">
+            <div class="row align-items-center">
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 text-center text-sm-start mb-3 mb-sm-1">
+                    <a href="index.html"><img src="{% static 'images/logos/logo.jpg' %}" title="invoice" alt="invoice" width="200px"></a>
+                </div><br><br>
+                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 text-center text-sm-end mb-3 mb-sm-1">
+                    <h4 class="text-30 mb-0 mt-0">Invoice</h4>
+                </div><br><br>
+            </div>
+            <hr>
+            <div class="row">
+            
+                <div class="col-sm-6"><strong>Date:</strong>05/06/2024</div>
+                <div class="col-sm-6 text-sm-end"> <strong>Invoice No:</strong>23</div>
+                
+            </div>
+            <hr>
+        </div><br><br>
+        <hr>
+        <!-- invoice Details -->
+        <!-- <div class="invoice-details border-top mt-20 pt-20">
+            <div class="row">
+                <div class="col-sm-6 text-sm-end order-sm-1">
+                    <strong class="text-18 mb-3 d-inline-block">Pay To:</strong>
+                    <address class="mb-4">
+                        initTheme<br>
+                        1216 R. Dhaka, Bangladesh<br>
+                        Bonani, OX Bokki<br>
+                        contact@inittheme.com
+                    </address>
+                </div>
+                <div class="col-sm-6 order-sm-0">
+                    <strong class="text-18 mb-3 d-inline-block">Invoiced To:</strong>
+                    <address class="mb-4">
+                        Rafsan Jani<br>
+                        16/10 A Banasree<br>
+                        1508C uttor AN<br>
+                        kolkata , india
+                    </address>
+                </div>
+            </div>
+        </div> -->
+        <!-- invoice descriptions -->
+        <div class="card mb-3">
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                <table class="table mb-0">
+                <thead class="card-header">
+                    <tr>
+                        <td class="col-3"><strong>Product</strong></td>
+                        <td class="col-3"><strong></strong></td>
+                        <td class="col-1 text-center"><strong>Rate</strong></td>
+                        <td class="col-3 text-center"><strong>QTY</strong></td>
+                        <td class="col-2 text-end"><strong>Amount</strong></td>
+                    </tr>
+                </thead>
+                    <tbody>
+                        {% for product_id, item in cart_data.items %}
+                        <tr> 
+                            <td class="col-3">{{item.title}}</td>
+                            <td class="col-4">{{item.description}}</td>
+                            <td class="col-2 text-center">₹ {{item.price}}</td>
+                            <td class="col-1 text-center">{{item.qty}}</td>
+                            <td class="col-2 text-end">₹{% widthratio item.price 1 item.qty %}</td>
+                        </tr>
+                        {% endfor %}
+                        
+                    </tbody>
+                    <tfoot>
+                        <tr  class="card-footer">
+                            <td colspan="5" class="text-end"><strong>Sub Total:</strong></td>
+                            <td class="text-end">₹{{cart_total_amount}}</td>
+                        </tr>
+            
+                        <tr>
+                            <td colspan="5" class="text-end border-bottom-0"><strong>Total:</strong></td>
+                            <td class="text-end border-bottom-0">₹{{cart_total_amount}}</td>
+                        </tr>
+                    </tfoot>
+                </table>
+                </div>
+            </div>
+           
+        </div>
+        <div>
+            <strong>Invoice To:</strong>{{request.user|title}}<br>
+        </div>
+    </main>
+    <!-- invoice Bottom  -->
+    <div class="text-center mt-5 mb-4 regular-button">
+        <div class="d-print-none d-flex justify-content-center flex-wrap gap-10"> 
+            <button id="bill-download" class="btn-primary-outline">Download</button> 
+            <a href="javascript:window.print()" class="btn-primary-fill">Print Invoice</a> 
+        </div>
+    </div>
+
+    <!-- jquery-->
+    <script src="{% static 'javascript/jquery-3.7.0.min.js' %}"></script>
+    <!-- Plugin -->
+    <script src="{% static 'javascript/plugin.js' %}"></script>
+    <!-- Main js-->
+    <script src="{% static 'javascript/mian.js' %}"></script>
+</body>
+</html> 

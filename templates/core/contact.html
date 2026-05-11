@@ -1,0 +1,126 @@
+{% extends "partials/base.html" %}
+{% load static %}
+
+{% block content %}
+
+
+    <body>
+
+
+
+<!-- Top Section -->
+<section class="contact-top">
+    <div class="container">
+        <p class="text-uppercase text-muted">Get In Touch</p>
+        <h2>Our Contact Information</h2>
+
+        <div class="row mt-5">
+            <div class="col-md-4">
+                <div class="info-box">
+                    <div class="info-icon">📍</div>
+                    <h5>Our Address</h5>
+                    <p>
+FF-2, Gurukul Road<br>
+Memnagar, Ahmedabad<br>
+Gujarat, India
+</p>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="info-box">
+                    <div class="info-icon">📞</div>
+                    <h5>Contact Number</h5>
+                    <p>+91 78618 65776<br>support@yourstore.com</p>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="info-box">
+                    <div class="info-icon">⏰</div>
+                    <h5>Open Hours</h5>
+                    <p>Mon - Sat: 9:00 - 6:00<br>Sunday: Closed</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% comment %} <!-- Map + Form Section -->
+<section class="contact-section">
+    <div class="container">
+        <div class="row">
+            
+            <!-- Google Map -->
+            <div class="col-md-6 mb-4">
+                <iframe
+src="https://www.google.com/maps?q=FF-2,Gurukul Road,Memnagar,Ahmedabad&output=embed"
+
+                    width="100%" height="450" style="border:0;" allowfullscreen>
+                </iframe>
+            </div> {% endcomment %}
+
+            <!-- Contact Form -->
+            <div class="col-md-6">
+                <h2 class="mb-4">Send Us A Message.</h2>
+        
+
+{% if messages %}
+{% for message in messages %}
+<div style="background:#d4edda;padding:10px;margin-bottom:15px;color:#155724;">
+{{ message }}
+</div>
+{% endfor %}
+{% endif %}
+
+                <form method="POST" class="contact-form">
+                    {% csrf_token %}
+                    
+                    <input type="text" name="name" class="form-control" placeholder="Full Name *" required>
+                    <input type="email" name="email" class="form-control" placeholder="Email Address *" required>
+                    <input type="text" name="phone" class="form-control" placeholder="Phone Number *">
+                    
+                    <select name="option" class="form-control">
+                        <option>Choose A Option</option>
+                        <option>General Inquiry</option>
+                        <option>Order Issue</option>
+                        <option>Support</option>
+                    </select>
+
+                    <textarea name="message" rows="5" class="form-control" placeholder="Type Your Message"></textarea>
+
+                    <button type="submit">Send Now</button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </body>
+
+<!-- Mirrored from ex-coders.com/html/posh/contact.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 29 Jan 2026 08:58:53 GMT -->
+</html>
+{% endblock %} 
+
